@@ -5,29 +5,38 @@ import { getProducts } from "./Api";
 import { connect, useSelector } from "react-redux";
 import { updateProductList, selectProductList } from "../reduxOld/actions";
 import Headers from "./Header";
-function ProductPage() {
-  const productList = useSelector(selectProductList);
-  console.log(productList);
-  return (
-    <>
-      <div>
-        <Headers />
-        <CardDeck>
-          {productList.length >= 0
-            ? productList.map((product, index) => {
-                console.log(product);
-                return (
-                  <div key={index}>
-                    <ProductCard data={product} />
-                  </div>
-                );
-              })
-            : null}
-        </CardDeck>
-      </div>
-    </>
-  );
+export default class ProductPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { productList: [] };
+  }
+  componentDidMount() {
+    getProducts()
+      .then((productList) => {
+        this.setState({ productList });
+      })
+      .catch((e) => {
+        throw e;
+      });
+  }
+  render() {
+    return (
+      <>
+        <div>
+          <Headers />
+          <CardDeck>
+            {this.state.productList.length >= 0
+              ? this.state.productList.map((product, index) => {
+                  return (
+                    <div key={index}>
+                      <ProductCard data={product} />
+                    </div>
+                  );
+                })
+              : null}
+          </CardDeck>
+        </div>
+      </>
+    );
+  }
 }
-export default connect(null, { updateProductList, selectProductList })(
-  ProductPage
-);
