@@ -2,10 +2,10 @@ import React from "react";
 import ProductCard from "./reusables/ProductCard";
 import CardDeck from "react-bootstrap/CardDeck";
 import { getProducts } from "./Api";
-import { connect, useSelector } from "react-redux";
-import { updateProductList, selectProductList } from "../reduxOld/actions";
+import { connect } from "react-redux";
+import { updateProductList } from "../reduxOld/actions";
 import Headers from "./Header";
-export default class ProductPage extends React.Component {
+class ProductPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { productList: [] };
@@ -13,7 +13,7 @@ export default class ProductPage extends React.Component {
   componentDidMount() {
     getProducts()
       .then((productList) => {
-        this.setState({ productList });
+        this.props.updateProductList(productList);
       })
       .catch((e) => {
         throw e;
@@ -24,9 +24,9 @@ export default class ProductPage extends React.Component {
       <>
         <div>
           <Headers />
-          <CardDeck>
-            {this.state.productList.length >= 0
-              ? this.state.productList.map((product, index) => {
+          <CardDeck style={{ marginLeft: "30%" }}>
+            {this.props.productList.length >= 0
+              ? this.props.productList.map((product, index) => {
                   return (
                     <div key={index}>
                       <ProductCard data={product} />
@@ -40,3 +40,9 @@ export default class ProductPage extends React.Component {
     );
   }
 }
+export default connect(
+  (state) => {
+    return { productList: state.reducer.productList };
+  },
+  { updateProductList }
+)(ProductPage);
