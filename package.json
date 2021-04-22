@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@material-ui/core": "4.11.3",
     "@reduxjs/toolkit": "1.5.1",
     "@types/react-bootstrap": "0.32.25",
     "algolia": "0.0.0",

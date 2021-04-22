@@ -5,7 +5,7 @@ export const defaultReducer = createSlice({
   initialState: { productList: Array([]) },
   reducers: {
     addProduct: (state, action) => {
-      return;
+      return { productList: [...state.productList, action.payload] };
     },
     removeProduct: (state, action) => {
       return {

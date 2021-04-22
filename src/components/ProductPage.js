@@ -3,13 +3,16 @@ import ProductCard from "./reusables/ProductCard";
 import CardDeck from "react-bootstrap/CardDeck";
 import { getProducts } from "./Api";
 import { connect } from "react-redux";
-import { updateProductList } from "../reduxOld/actions";
+import { updateProductList, addProduct } from "../reduxOld/actions";
+import Button from "react-bootstrap/Button";
 import Headers from "./Header";
+import Popup from "./reusables/pop-up";
 class ProductPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { productList: [] };
+    this.state = { popUpOpen: false };
   }
+
   componentDidMount() {
     getProducts()
       .then((productList) => {
@@ -19,6 +22,10 @@ class ProductPage extends React.Component {
         throw e;
       });
   }
+  togglePopUp = () => {
+    this.setState({ popUpOpen: !this.state.popUpOpen });
+    console.log(this.state.popUpOpen);
+  };
   render() {
     return (
       <>
@@ -35,6 +42,16 @@ class ProductPage extends React.Component {
                 })
               : null}
           </CardDeck>
+          <Button
+            style={{ marginLeft: "43%", marginTop: "10px" }}
+            variant="danger"
+            onClick={this.togglePopUp}
+          >
+            Add a product
+          </Button>
+          {this.state.popUpOpen ? (
+            <Popup show={this.state.popUpOpen} onHide={this.togglePopUp} />
+          ) : null}
         </div>
       </>
     );
@@ -42,7 +59,10 @@ class ProductPage extends React.Component {
 }
 export default connect(
   (state) => {
-    return { productList: state.reducer.productList };
+    return {
+      ...state,
+      productList: state.reducer.productList
+    };
   },
-  { updateProductList }
+  { updateProductList, addProduct }
 )(ProductPage);
