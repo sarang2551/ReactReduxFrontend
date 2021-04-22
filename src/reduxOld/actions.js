@@ -7,7 +7,7 @@ export const updateProductList = (products) => {
     payload: products
   };
 };
-export const addproduct = (item) => ({
+export const addProduct = (item) => ({
   type: addProductActionType,
   payload: item
 });

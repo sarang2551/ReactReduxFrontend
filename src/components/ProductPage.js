@@ -26,6 +26,14 @@ class ProductPage extends React.Component {
     this.setState({ popUpOpen: !this.state.popUpOpen });
     console.log(this.state.popUpOpen);
   };
+  handleProductAddition = (e) => {
+    e.preventDefault();
+    //going to be a form data
+    const value = e.target.product;
+    //API call
+    //redux action
+    addProduct(e.target);
+  };
   render() {
     return (
       <>
@@ -50,7 +58,11 @@ class ProductPage extends React.Component {
             Add a product
           </Button>
           {this.state.popUpOpen ? (
-            <Popup show={this.state.popUpOpen} onHide={this.togglePopUp} />
+            <Popup
+              show={this.state.popUpOpen}
+              onHide={this.togglePopUp}
+              handleAddProduct={this.handleProductAddition}
+            />
           ) : null}
         </div>
       </>
