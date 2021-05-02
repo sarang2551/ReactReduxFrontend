@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./reusables/login.scss";
-import Axios from "axios";
 import { verifyUser } from "./Api";
 export default class LoginBox extends React.Component {
   constructor(props) {

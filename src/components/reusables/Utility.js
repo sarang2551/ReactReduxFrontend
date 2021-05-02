@@ -7,6 +7,7 @@ export const arrayBufferToBase64 = (buffer) => {
   var binary = "";
   var bytes = new Uint8Array(buffer);
   var len = bytes.byteLength;
+  //super long loop of 30000 interations
   for (var i = 0; i < len; i++) {
     binary += String.fromCharCode(bytes[i]);
   }
@@ -21,7 +22,8 @@ export const JPEG_OR_PNG = (base64String) => {
   } else if (base64String.startsWith(base64PrefixPNG)) {
     return "png";
   } else {
-    throw new Error("Image is neither a png nor a jpeg!");
+    console.log(base64Prefix.slice(0, 20));
+    return "png";
   }
 };
 
@@ -31,7 +33,7 @@ export const canvas2Base64WithMaxSize = (
   downgraded,
   imageSrc
 ) => {
-  quality = quality || 1.0;
+  quality = quality || 2.0;
   var imageType = JPEG_OR_PNG(imageSrc);
   let value;
   if (imageType === "jpeg") {
@@ -46,7 +48,7 @@ export const canvas2Base64WithMaxSize = (
     // downgrade the quality progressively until the size is under the max
     return canvas2Base64WithMaxSize(canvas, quality * 0.7, true);
   } else {
-    return value;
+    return `${imageType === "png" ? base64PrefixPNG : base64Prefix}${value}`;
   }
 };
 

@@ -10,6 +10,6 @@ export async function verifyUser(userInfo) {
 export async function registerUser(userInfo) {
   return await Axios.post("http://localhost:4000/login", userInfo);
 }
-export async function addProduct(productData) {
+export async function apiAddProduct(productData) {
   return await Axios.post("http://localhost:4000/addProduct", productData);
 }

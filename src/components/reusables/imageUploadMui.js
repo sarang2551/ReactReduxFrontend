@@ -13,7 +13,7 @@ export default function UploadImageMui(props) {
     setImageSrc(imageWithPrefix(base64));
   };
 
-  const imageWithPrefix = (base64) => `data:${fileInfo.type};base64, ${base64}`;
+  const imageWithPrefix = (base64) => `data:${fileInfo.type};base64,${base64}`;
 
   const onFileLoadError = (ev) => {
     //Need to change to a proper UI error
@@ -41,18 +41,12 @@ export default function UploadImageMui(props) {
     canvas.height = height;
 
     canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-    const resized = canvas2Base64WithMaxSize(canvas, 1.0, imageSrc);
+    const resized = canvas2Base64WithMaxSize(canvas, 1.0, false, imageSrc);
 
     // setImageSrc(imageWithPrefix(resized));
     // image.remove();
 
     props.succeedCallback && props.succeedCallback({ resizedBase64: resized });
-
-    props.setGlobalSharedAction({
-      message: null,
-      messageType: "success",
-      loading: false
-    });
   };
   const setImgUploadedCallback = (id, e) => {
     let errorMessage = "";
@@ -66,8 +60,7 @@ export default function UploadImageMui(props) {
 
       if (errorMessage) {
         //proper UI error required
-        console.log(errorMessage);
-        return;
+        throw new Error(errorMessage);
       }
 
       // store file info to function scope
@@ -97,11 +90,10 @@ export default function UploadImageMui(props) {
       <div>
         <img
           id={imageHolderId}
-          alt={""}
+          alt={"Product"}
           style={{
-            maxHeight: "320px",
-            maxWidth: "320px",
-            display: "none"
+            maxHeight: "160px",
+            maxWidth: "160px"
           }}
           src={imageSrc}
         />

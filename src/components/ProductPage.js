@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "./reusables/ProductCard";
 import CardDeck from "react-bootstrap/CardDeck";
-import { getProducts } from "./Api";
+import { apiAddProduct, getProducts } from "./Api";
 import { connect } from "react-redux";
 import { updateProductList, addProduct } from "../reduxOld/actions";
 import Button from "react-bootstrap/Button";
@@ -24,15 +24,18 @@ class ProductPage extends React.Component {
   }
   togglePopUp = () => {
     this.setState({ popUpOpen: !this.state.popUpOpen });
-    console.log(this.state.popUpOpen);
+    console.log(!this.state.popUpOpen);
   };
-  handleProductAddition = (e) => {
-    e.preventDefault();
-    //going to be a form data
-    const value = e.target.product;
+  handleProductAddition = async (formData) => {
+    console.log(formData);
+
     //API call
+    const resposne = await apiAddProduct(formData);
+    if (!resposne.data) {
+      /*UI Error*/
+    }
     //redux action
-    addProduct(e.target);
+    addProduct(formData);
   };
   render() {
     return (
