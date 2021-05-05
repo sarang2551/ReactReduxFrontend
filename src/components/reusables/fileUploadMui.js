@@ -2,7 +2,10 @@ import { Typography } from "@material-ui/core";
 
 function FileUploaderMui(props) {
   return (
-    <div className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-fullWidth">
+    <div
+      style={{ marginLeft: props.marginLeft, marginBottom: props.marginBottom }}
+      className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-fullWidth"
+    >
       <input
         type={"file"}
         id="image-file-upload"

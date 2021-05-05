@@ -6,7 +6,7 @@ import {
   CDBSidebarContent,
   CDBSidebarMenu
 } from "cdbreact";
-import PersonalPhoto from "./reusables/images/Sarang-passport photo.jpg";
+import { IronManCartoonImage } from "./reusables/imagesUrl";
 import Image from "react-bootstrap/Image";
 import { SocialIcon } from "react-social-icons";
 export default function Sidebar() {
@@ -22,7 +22,7 @@ export default function Sidebar() {
             style={{ color: "inherit" }}
           >
             <Image
-              src={PersonalPhoto}
+              src={IronManCartoonImage}
               roundedCircle
               style={{ height: "150px", width: "150px" }}
             />

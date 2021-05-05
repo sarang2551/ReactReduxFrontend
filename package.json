@@ -6,12 +6,14 @@
   "main": "src/index.js",
   "dependencies": {
     "@material-ui/core": "4.11.3",
+    "@material-ui/icons": "4.11.2",
     "@reduxjs/toolkit": "1.5.1",
     "@types/react-bootstrap": "0.32.25",
     "algolia": "0.0.0",
     "axios": "0.21.1",
     "bootstrap": "4.6.0",
     "cdbreact": "1.1.0",
+    "mdbreact": "5.0.2",
     "particles-bg": "2.5.5",
     "react": "17.0.2",
     "react-arc-text": "1.0.5",
@@ -22,6 +24,7 @@
     "react-scripts": "4.0.0",
     "react-social-icons": "5.1.1",
     "redux": "4.0.5",
+    "redux-react-session": "2.6.1",
     "snipcart": "0.0.1"
   },
   "devDependencies": {

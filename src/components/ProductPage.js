@@ -7,6 +7,10 @@ import { updateProductList, addProduct } from "../reduxOld/actions";
 import Button from "react-bootstrap/Button";
 import Headers from "./Header";
 import Popup from "./reusables/pop-up";
+import { MDBInput, MDBCol } from "mdbreact";
+import SearchIcon from "@material-ui/icons/Search";
+import { TextField } from "@material-ui/core";
+import { sessionService } from "redux-react-session";
 class ProductPage extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +46,17 @@ class ProductPage extends React.Component {
       <>
         <div>
           <Headers />
+          <TextField
+            multiline
+            id="standard-basic"
+            label="Search"
+            style={{
+              marginLeft: "250px",
+              marginBottom: "20px",
+              width: "200px"
+            }}
+          />
+
           <CardDeck style={{ marginLeft: "30%" }}>
             {this.props.productList.length >= 0
               ? this.props.productList.map((product, index) => {

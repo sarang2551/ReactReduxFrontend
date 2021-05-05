@@ -85,15 +85,18 @@ export default function UploadImageMui(props) {
         succeedCallback={(id, data) => {
           setImgUploadedCallback(id, data);
         }}
+        marginLeft={props.marginLeft}
+        marginBottom={props.marginBottom}
       />
 
       <div>
         <img
           id={imageHolderId}
-          alt={"Product"}
+          alt={""}
           style={{
             maxHeight: "160px",
-            maxWidth: "160px"
+            maxWidth: "160px",
+            marginLeft: props.margin
           }}
           src={imageSrc}
         />

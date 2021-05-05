@@ -8,7 +8,9 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ImageUploadMUI from "./imageUploadMui";
+import { MDBInput } from "mdbreact";
 function MyVerticallyCenteredModal(props) {
+  const marginStyling = { marginLeft: "300px" };
   const [formData, setFormData] = React.useState({
     name: "",
     price: 0,
@@ -35,7 +37,8 @@ function MyVerticallyCenteredModal(props) {
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
+        animation={true}
+        centered={true}
       >
         <ModalHeader closeButton>
           <ModalTitle id="contained-modal-title-vcenter">
@@ -44,25 +47,41 @@ function MyVerticallyCenteredModal(props) {
         </ModalHeader>
         <ModalBody>
           <form>
-            <h4>Upload Image</h4>
-            {/* Add a modal element to render images from local storage */}
+            <h4 style={marginStyling}>Upload Image</h4>
             <ImageUploadMUI
               label={"Add product"}
               succeedCallback={settingResizeImage}
+              marginLeft={marginStyling.marginLeft}
+              marginBottom={"0"}
+              marginTop={"0"}
             />
-            <h4>Product name</h4>
-            <input placeholder="name" name="name" onChange={onInfoChange} />
-            <h4>Product description</h4>
+            <h4 style={marginStyling}>Product name</h4>
+            <MDBInput
+              style={{ width: "150px", marginLeft: "300px" }}
+              name="name"
+              onChange={onInfoChange}
+            />
+
+            <h4 style={marginStyling}>Product description</h4>
             <textarea
+              style={marginStyling}
               name="description"
               placeholder="add product details"
               size="3"
               onChange={onInfoChange}
             />
-            <h4>Product Price</h4>
-            <input onChange={onInfoChange} name="price"></input>
-            <h4>Stock</h4>
-            <input onChange={onInfoChange} name="stock"></input>
+            <h4 style={marginStyling}>Product Price</h4>
+            <input
+              style={marginStyling}
+              onChange={onInfoChange}
+              name="price"
+            ></input>
+            <h4 style={marginStyling}>Stock</h4>
+            <input
+              style={marginStyling}
+              onChange={onInfoChange}
+              name="stock"
+            ></input>
           </form>
         </ModalBody>
         <ModalFooter>

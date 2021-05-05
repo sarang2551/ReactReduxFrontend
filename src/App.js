@@ -1,8 +1,5 @@
 import "./styles.css";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
-import { useDispatch, connect, useSelector } from "react-redux";
-
-import { getProducts } from "./components/Api";
 import Homepage from "./components/Home";
 import Header from "./components/Header";
 import ProductPage from "./components/ProductPage";
@@ -15,7 +12,7 @@ export default function App() {
       <Switch>
         <Route
           exact
-          path="/"
+          path="/mainpage"
           render={() => {
             return (
               <>

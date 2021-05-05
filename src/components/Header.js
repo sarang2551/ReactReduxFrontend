@@ -43,9 +43,9 @@ export default function Header() {
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Form inline>
+        {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        </Form>
+        </Form> */}
         <Nav.Link href="/login-register">
           <Button variant="outline-info" title="Login">
             Login
