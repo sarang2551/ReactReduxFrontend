@@ -10,7 +10,6 @@ import Popup from "./reusables/pop-up";
 import { MDBInput, MDBCol } from "mdbreact";
 import SearchIcon from "@material-ui/icons/Search";
 import { TextField } from "@material-ui/core";
-import { sessionService } from "redux-react-session";
 class ProductPage extends React.Component {
   constructor(props) {
     super(props);

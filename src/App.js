@@ -12,7 +12,7 @@ export default function App() {
       <Switch>
         <Route
           exact
-          path="/mainpage"
+          path="/"
           render={() => {
             return (
               <>

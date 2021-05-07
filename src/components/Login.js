@@ -2,7 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import "./reusables/login.scss";
 import { verifyUser } from "./Api";
-export default class LoginBox extends React.Component {
+import { connect } from "react-redux";
+import { addLoginSession } from "../reduxOld/actions";
+class LoginBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +34,8 @@ export default class LoginBox extends React.Component {
       console.log("res.data ", res.data);
       switch (loginStatus) {
         case "success":
-          this.setState({ redirect: "/mainpage", resData: res.data });
+          this.props.addLoginSession({ username, auth: true });
+          this.setState({ redirect: "/", resData: res.data });
           return;
         case "failed":
           loginProps = {
@@ -107,3 +110,4 @@ export default class LoginBox extends React.Component {
     );
   }
 }
+export default connect(null, { addLoginSession })(LoginBox);

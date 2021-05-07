@@ -1,5 +1,12 @@
-import { updateListActionType, addProductActionType } from "./actions";
-const initialState = { productList: [] };
+import {
+  updateListActionType,
+  addProductActionType,
+  addLoginSessionInfoActionType
+} from "./actions";
+const initialState = {
+  productList: [],
+  userSession: { username: "", auth: false, userType: "default" }
+};
 const reducer = (state, action) => {
   if (!state) {
     state = initialState;
@@ -13,6 +20,15 @@ const reducer = (state, action) => {
       };
     case addProductActionType:
       return { ...state, productList: [...state.productList, payload] };
+    case addLoginSessionInfoActionType:
+      return {
+        ...state,
+        userSession: {
+          ...state.userSession,
+          username: payload.username,
+          auth: payload.auth
+        }
+      };
     default:
       return { ...state };
   }

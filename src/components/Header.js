@@ -5,17 +5,10 @@ import "./reusables/Button.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import { getProducts } from "./Api";
-import { updateProductlist } from "../redux/reducers";
-import { useDispatch } from "react-redux";
-export default function Header() {
-  const dispatch = useDispatch();
-  async function updateProductListFromSelect() {
-    let products = await getProducts();
-    dispatch(updateProductlist(products));
-  }
+import { connect } from "react-redux";
+import { selectUserSessionDetails } from "../reduxOld/actions";
+function Header(props) {
+  const userSessionInfo = props.userSession;
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
       <Navbar.Brand href="/">Personal Shop</Navbar.Brand>
@@ -23,14 +16,9 @@ export default function Header() {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/features">Features</Nav.Link>
-          <Nav.Link
-            href="/products"
-            onSelect={() => {
-              updateProductListFromSelect();
-            }}
-          >
-            Products
-          </Nav.Link>
+          {userSessionInfo.auth ? (
+            <Nav.Link href="/products">Products</Nav.Link>
+          ) : null}
           <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">
@@ -60,3 +48,9 @@ export default function Header() {
     </Navbar>
   );
 }
+export default connect(
+  (state) => {
+    return { ...state, userSession: state.reducer.userSession };
+  },
+  { selectUserSessionDetails }
+)(Header);
