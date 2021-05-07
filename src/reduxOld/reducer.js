@@ -1,7 +1,8 @@
 import {
   updateListActionType,
   addProductActionType,
-  addLoginSessionInfoActionType
+  addLoginSessionInfoActionType,
+  deleteLoginSessionActionType
 } from "./actions";
 const initialState = {
   productList: [],
@@ -21,6 +22,15 @@ const reducer = (state, action) => {
     case addProductActionType:
       return { ...state, productList: [...state.productList, payload] };
     case addLoginSessionInfoActionType:
+      return {
+        ...state,
+        userSession: {
+          ...state.userSession,
+          username: payload.username,
+          auth: payload.auth
+        }
+      };
+    case deleteLoginSessionActionType:
       return {
         ...state,
         userSession: {

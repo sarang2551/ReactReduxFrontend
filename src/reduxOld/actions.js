@@ -1,6 +1,7 @@
 export const updateListActionType = "updateProductList";
 export const addProductActionType = "addProductItem";
 export const addLoginSessionInfoActionType = "addLoginSession";
+export const deleteLoginSessionActionType = "deleteLoginSession";
 export const selectProductList = (state) => state.productList;
 export const selectUserSessionDetails = (state) => state.userSession;
 export const updateProductList = (products) => {
@@ -15,5 +16,9 @@ export const addProduct = (item) => ({
 });
 export const addLoginSession = (item) => ({
   type: addLoginSessionInfoActionType,
+  payload: item
+});
+export const deleteLoginSession = (item) => ({
+  type: deleteLoginSession,
   payload: item
 });
