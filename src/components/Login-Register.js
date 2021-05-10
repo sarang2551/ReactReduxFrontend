@@ -2,7 +2,7 @@ import React from "react";
 import "./reusables/login.scss";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
-
+import GlobalMessageHandler from "./reusables/globalMessageHandler";
 import LoginBox from "./Login";
 import RegisterBox from "./Register";
 export default class MyForm extends React.Component {
@@ -106,6 +106,7 @@ export default class MyForm extends React.Component {
             {this.state.isRegisterOpen && <RegisterBox />}
           </div>
         </div>
+        <GlobalMessageHandler />
       </>
     );
   }

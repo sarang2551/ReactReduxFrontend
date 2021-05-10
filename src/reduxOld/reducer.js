@@ -1,12 +1,11 @@
 import {
   updateListActionType,
   addProductActionType,
-  addLoginSessionInfoActionType,
-  deleteLoginSessionActionType
+  displayMessageActionType
 } from "./actions";
 const initialState = {
   productList: [],
-  userSession: { username: "", auth: false, userType: "default" }
+  messageObj: { type: "", message: "", show: false }
 };
 const reducer = (state, action) => {
   if (!state) {
@@ -21,24 +20,16 @@ const reducer = (state, action) => {
       };
     case addProductActionType:
       return { ...state, productList: [...state.productList, payload] };
-    case addLoginSessionInfoActionType:
+    case displayMessageActionType:
       return {
         ...state,
-        userSession: {
-          ...state.userSession,
-          username: payload.username,
-          auth: payload.auth
+        messageObj: {
+          message: payload.message,
+          type: payload.type,
+          show: payload.show
         }
       };
-    case deleteLoginSessionActionType:
-      return {
-        ...state,
-        userSession: {
-          ...state.userSession,
-          username: payload.username,
-          auth: payload.auth
-        }
-      };
+
     default:
       return { ...state };
   }

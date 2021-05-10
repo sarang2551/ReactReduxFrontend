@@ -3,7 +3,8 @@ import { Redirect } from "react-router-dom";
 import "./reusables/login.scss";
 import { verifyUser } from "./Api";
 import { connect } from "react-redux";
-import { addLoginSession } from "../reduxOld/actions";
+import { displayMessage } from "../reduxOld/actions";
+import { sessionService } from "redux-react-session";
 class LoginBox extends React.Component {
   constructor(props) {
     super(props);
@@ -34,25 +35,26 @@ class LoginBox extends React.Component {
       console.log("res.data ", res.data);
       switch (loginStatus) {
         case "success":
-          this.props.addLoginSession({ username, auth: true });
-          this.setState({ redirect: "/", resData: res.data });
-          return;
+          sessionService.saveSession({ username, auth: true }).then(() => {
+            this.setState({ redirect: "/", resData: res.data });
+          });
+
+          break;
         case "failed":
           loginProps = {
             type: "failed",
-            content: `${username} login failed. Incorrect password!`
+            message: `${username} login failed. Incorrect password!`,
+            show: true
           };
-          this.setState({
-            errorProps: loginProps,
-            renderLoginMessage: true
-          });
+          this.props.displayMessage(loginProps);
           return;
         case "notFound":
-          loginProps = { type: "warn", content: `User could not be found!` };
-          this.setState({
-            errorProps: loginProps,
-            renderLoginMessage: true
-          });
+          loginProps = {
+            type: "warn",
+            message: `User could not be found!`,
+            show: true
+          };
+          this.props.displayMessage(loginProps);
           return;
         default:
           return <div></div>;
@@ -110,4 +112,4 @@ class LoginBox extends React.Component {
     );
   }
 }
-export default connect(null, { addLoginSession })(LoginBox);
+export default connect(null, { displayMessage })(LoginBox);

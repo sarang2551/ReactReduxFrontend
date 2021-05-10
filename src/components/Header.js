@@ -6,14 +6,12 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { connect } from "react-redux";
-import {
-  selectUserSessionDetails,
-  deleteLoginSession
-} from "../reduxOld/actions";
+import { sessionService } from "redux-react-session";
 function Header(props) {
-  const userSessionInfo = props.userSession;
   const onLogOutClick = (e) => {
-    props.deleteLoginSession({ username: "", auth: false });
+    sessionService.deleteUser().then(() => {
+      sessionService.deleteSession();
+    });
   };
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
@@ -22,7 +20,7 @@ function Header(props) {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/features">Features</Nav.Link>
-          {userSessionInfo.auth ? (
+          {props.userSession.authenticated ? (
             <Nav.Link href="/products">Products</Nav.Link>
           ) : null}
           <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
@@ -40,7 +38,7 @@ function Header(props) {
         {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
         </Form> */}
-        {!userSessionInfo.auth ? (
+        {!props.userSession.authenticated ? (
           <Nav.Link href="/login-register">
             <Button variant="outline-info" title="Login">
               Login/Register
@@ -66,9 +64,6 @@ function Header(props) {
     </Navbar>
   );
 }
-export default connect(
-  (state) => {
-    return { ...state, userSession: state.reducer.userSession };
-  },
-  { selectUserSessionDetails, deleteLoginSession }
-)(Header);
+export default connect((state) => {
+  return { userSession: state.session };
+}, null)(Header);
