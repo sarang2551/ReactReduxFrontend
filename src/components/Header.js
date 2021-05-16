@@ -9,7 +9,6 @@ function Header() {
   var userAuth = false;
   const sessionData = JSON.parse(window.localStorage.getItem("session"));
   if (sessionData) {
-    console.log(sessionData);
     userAuth = sessionData.auth;
   }
   const onLogOutClick = (e) => {

@@ -16,6 +16,6 @@ export async function registerUser(userInfo) {
 export async function apiAddProduct(productData) {
   return await Axios.post("http://localhost:4000/addProduct", productData);
 }
-export async function editProductInfo(productData) {
+export async function apiEditProductInfo(productData) {
   return await Axios.post("http://localhost:4000/editProduct", productData);
 }

@@ -3,14 +3,14 @@ import Card from "react-bootstrap/Card";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
-import { AiTwotoneEdit, AiFillDelete } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
 //Product details {name,description,price,stock,image}
 const ProductCard = (props) => {
-  const { name, description, price, stock, image } = props.data;
+  const { name, description, price, stock, image, index } = props.data;
   const [selectedImageIndex, setSelectedImage] = React.useState();
   const onClickEdit = (e) => {
     e.preventDefault();
+    props.onSelect && props.onSelect(index);
     props.editOnClickEvent && props.editOnClickEvent();
   };
   return (
@@ -18,8 +18,8 @@ const ProductCard = (props) => {
       <Carousel
         activeIndex={selectedImageIndex}
         interval={null}
-        onSelect={(index) => {
-          setSelectedImage(index);
+        onSelect={(i) => {
+          setSelectedImage(i);
         }}
         direction="next"
       >
@@ -40,12 +40,17 @@ const ProductCard = (props) => {
         <ListGroupItem>Stock remaining: {stock}</ListGroupItem>
       </ListGroup>
       <Card.Body>
-        <AiTwotoneEdit
-          style={{ marginBottom: "0", paddingBottom: "0" }}
-          size="40"
+        <Button
+          block
+          variant="primary"
+          style={{ marginTop: "0" }}
           onClick={onClickEdit}
-        />
-        <AiFillDelete style={{ marginLeft: "60px" }} size="40" />
+        >
+          Edit
+        </Button>
+        <Button block variant="danger">
+          Delete
+        </Button>
       </Card.Body>
     </Card>
   );

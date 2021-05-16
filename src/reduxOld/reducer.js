@@ -1,7 +1,8 @@
 import {
   updateListActionType,
   addProductActionType,
-  displayMessageActionType
+  displayMessageActionType,
+  editProductActionType
 } from "./actions";
 const initialState = {
   productList: [],
@@ -22,6 +23,25 @@ const reducer = (state, action) => {
       const productImage = payload.image || "";
       payload = { ...payload, image: [productImage] };
       return { ...state, productList: [...state.productList, payload] };
+    case editProductActionType:
+      if (payload.index === undefined || payload.index === null) {
+        throw new Error(
+          `Unable to edit product as product index was not found!`
+        );
+      }
+      const edittedDocument = state.productList[payload.index];
+      if (payload.image) {
+        edittedDocument.image.push(payload.image);
+        console.log("After pushing");
+        console.log(edittedDocument);
+        delete payload.image;
+        console.log("After image field deletion");
+        console.log(payload);
+      }
+
+      state.productList[payload.index] = { ...edittedDocument, ...payload };
+
+      return state;
     case displayMessageActionType:
       return {
         ...state,

@@ -1,11 +1,12 @@
 import React from "react";
 import ProductCard from "./reusables/ProductCard";
 import CardDeck from "react-bootstrap/CardDeck";
-import { apiAddProduct, getProducts } from "./Api";
+import { apiAddProduct, getProducts, apiEditProductInfo } from "./Api";
 import { connect } from "react-redux";
 import {
   updateProductList,
   addProduct,
+  editProduct,
   displayMessage
 } from "../reduxOld/actions";
 import Button from "react-bootstrap/Button";
@@ -16,8 +17,9 @@ class ProductPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      popUpOpen: false,
+      addPopUpOpen: false,
       editPopUpOpen: false,
+      selectedProductIndex: -1,
       sessionData: JSON.parse(window.localStorage.getItem("session"))
     };
   }
@@ -39,16 +41,19 @@ class ProductPage extends React.Component {
       });
   }
   togglePopUp = () => {
-    this.setState({ popUpOpen: !this.state.popUpOpen });
+    this.setState({ addPopUpOpen: !this.state.addPopUpOpen });
   };
   toggleEditPopUp = () => {
-    this.setState({ editPopUpOpen: !this.state.popUpOpen });
+    this.setState({ editPopUpOpen: !this.state.editPopUpOpen });
+  };
+  onProductSelect = (index) => {
+    this.setState({ selectedProductIndex: index });
   };
   handleProductAddition = async (formData) => {
     formData = { ...formData, username: this.state.sessionData.username };
     //API call
     const resposne = await apiAddProduct(formData);
-    if (!resposne.data) {
+    if (!resposne) {
       this.props.displayMessage({
         message: "Server side error while adding product!",
         type: "error",
@@ -64,7 +69,37 @@ class ProductPage extends React.Component {
       show: true
     });
   };
-  handleProductEdit = (formData) => {};
+  handleProductEdit = async (formData) => {
+    // Need to filter the data to remove any values that aren't modified
+    for (var key in formData) {
+      const value = formData[key];
+      if (value === "" || value === undefined || value === null) {
+        delete formData[key];
+      }
+    }
+    const apiFormData = {
+      ...formData,
+      username: this.state.sessionData.username
+    };
+    const response = await apiEditProductInfo(apiFormData);
+    if (!response) {
+      this.props.displayMessage({
+        message: "Server side error while editting product!",
+        type: "error",
+        show: true
+      });
+      return;
+    }
+    formData = { ...formData, index: this.state.selectedProductIndex };
+
+    // redux action
+    this.props.editProduct(formData);
+    this.props.displayMessage({
+      message: "Successfully editted a product!",
+      type: "success",
+      show: true
+    });
+  };
   render() {
     return (
       <>
@@ -90,8 +125,9 @@ class ProductPage extends React.Component {
                   return (
                     <div key={index}>
                       <ProductCard
-                        data={product}
+                        data={{ ...product, index }}
                         editOnClickEvent={this.toggleEditPopUp}
+                        onSelect={this.onProductSelect}
                       />
                     </div>
                   );
@@ -105,11 +141,12 @@ class ProductPage extends React.Component {
           >
             Add a product
           </Button>
-          {this.state.popUpOpen ? (
+          {this.state.addPopUpOpen ? (
             <Popup
               action={this.handleProductAddition}
-              show={this.state.popUpOpen}
+              show={this.state.addPopUpOpen}
               onHide={this.togglePopUp}
+              addFeature={true}
             />
           ) : null}
           {this.state.editPopUpOpen ? (
@@ -130,5 +167,5 @@ export default connect(
       productList: state.reducer.productList
     };
   },
-  { updateProductList, addProduct, displayMessage }
+  { updateProductList, addProduct, editProduct, displayMessage }
 )(ProductPage);

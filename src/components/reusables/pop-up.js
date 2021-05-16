@@ -11,6 +11,11 @@ import ImageUploadMUI from "./imageUploadMui";
 import { MDBInput } from "mdbreact";
 function MyVerticallyCenteredModal(props) {
   const marginStyling = { marginLeft: "300px" };
+  const headerText = props.addFeature ? "Add Product" : "Edit Product";
+  const productNameText = props.addFeature ? "Product name" : "Change name";
+  const imageUploadText = props.addFeature
+    ? "Upload Image"
+    : "Upload another image";
   const [formData, setFormData] = React.useState({
     name: "",
     price: 0,
@@ -26,7 +31,7 @@ function MyVerticallyCenteredModal(props) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
-  function sendToParentComponent(e) {
+  function triggerAction(e) {
     e.preventDefault();
     props.action && props.action(formData);
     props.onHide();
@@ -42,12 +47,12 @@ function MyVerticallyCenteredModal(props) {
       >
         <ModalHeader closeButton>
           <ModalTitle id="contained-modal-title-vcenter">
-            Add Product
+            {headerText}
           </ModalTitle>
         </ModalHeader>
         <ModalBody>
           <form>
-            <h4 style={marginStyling}>Upload Image</h4>
+            <h4 style={marginStyling}>{imageUploadText}</h4>
             <ImageUploadMUI
               label={"Add product"}
               succeedCallback={settingResizeImage}
@@ -55,14 +60,16 @@ function MyVerticallyCenteredModal(props) {
               marginBottom={"0"}
               marginTop={"0"}
             />
-            <h4 style={marginStyling}>Product name</h4>
+            <h4 style={marginStyling}>{productNameText}</h4>
             <MDBInput
               style={{ width: "150px", marginLeft: "300px" }}
               name="name"
               onChange={onInfoChange}
             />
 
-            <h4 style={marginStyling}>Product description</h4>
+            <h4 style={marginStyling}>
+              {props.addFeature ? "Product" : "Change"} description
+            </h4>
             <textarea
               style={marginStyling}
               name="description"
@@ -70,13 +77,17 @@ function MyVerticallyCenteredModal(props) {
               size="3"
               onChange={onInfoChange}
             />
-            <h4 style={marginStyling}>Product Price</h4>
+            <h4 style={marginStyling}>
+              {props.addFeature ? "" : "Change"} Price
+            </h4>
             <input
               style={marginStyling}
               onChange={onInfoChange}
               name="price"
             ></input>
-            <h4 style={marginStyling}>Stock</h4>
+            <h4 style={marginStyling}>
+              {props.addFeature ? "" : "Change"}Stock
+            </h4>
             <input
               style={marginStyling}
               onChange={onInfoChange}
@@ -85,7 +96,9 @@ function MyVerticallyCenteredModal(props) {
           </form>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={sendToParentComponent}>Add</Button>
+          <Button onClick={triggerAction}>
+            {props.addFeature ? "Add" : "Edit"}
+          </Button>
           <Button onClick={props.onHide}>Close</Button>
         </ModalFooter>
       </Modal>
