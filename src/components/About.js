@@ -3,7 +3,7 @@ export default function AboutInfo() {
   const colorWord = (word, color) => <font style={{ color }}>{word} </font>;
   return (
     <div
-      style={{ position: "absolute", textAlign: "center", marginLeft: "50%" }}
+      style={{ position: "absolute", textAlign: "center", marginLeft: "20%" }}
     >
       <h1>Hello</h1>
       <span>I'm Sarang Nirwan.</span>
