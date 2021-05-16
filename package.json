@@ -13,7 +13,6 @@
     "axios": "0.21.1",
     "bootstrap": "4.6.0",
     "cdbreact": "1.1.0",
-    "js-cookies": "1.0.4",
     "mdbreact": "5.0.2",
     "particles-bg": "2.5.5",
     "react": "17.0.2",
@@ -27,8 +26,7 @@
     "react-scripts": "4.0.0",
     "react-social-icons": "5.1.1",
     "redux": "4.0.5",
-    "redux-react-session": "2.6.1",
-    "snipcart": "0.0.1"
+    "redux-react-session": "2.6.1"
   },
   "devDependencies": {
     "@babel/runtime": "7.13.8",
