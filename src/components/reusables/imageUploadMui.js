@@ -1,7 +1,9 @@
 import React from "react";
 import { arrayBufferToBase64, canvas2Base64WithMaxSize } from "./Utility";
 import FileUploaderMui from "./fileUploadMui";
-export default function UploadImageMui(props) {
+import { connect } from "react-redux";
+import { displayMessage } from "../../reduxOld/actions";
+function UploadImageMui(props) {
   const [imageSrc, setImageSrc] = React.useState("");
   const imageHolderId = "productImage";
 
@@ -16,8 +18,11 @@ export default function UploadImageMui(props) {
   const imageWithPrefix = (base64) => `data:${fileInfo.type};base64,${base64}`;
 
   const onFileLoadError = (ev) => {
-    //Need to change to a proper UI error
-    console.log("Failed to load file from local");
+    props.displayMessage({
+      message: "Failed to load Image from Local!",
+      type: "error",
+      show: true
+    });
   };
 
   const onFileLoadEnd = async (ev) => {
@@ -70,8 +75,11 @@ export default function UploadImageMui(props) {
       //reads blob and loads content, after which the loadend event is triggered
       reader.readAsArrayBuffer(e);
     } else {
-      //proper UI error required
-      console.log("Pls upload an Image!");
+      props.displayMessage({
+        message: "Pls upload an Image!",
+        type: "error",
+        show: true
+      });
     }
   };
   return (
@@ -104,3 +112,4 @@ export default function UploadImageMui(props) {
     </div>
   );
 }
+export default connect(null, { displayMessage })(UploadImageMui);

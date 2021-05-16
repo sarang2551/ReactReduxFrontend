@@ -11,7 +11,7 @@ const reducer = (state, action) => {
   if (!state) {
     state = initialState;
   }
-  const payload = action.payload;
+  var payload = action.payload;
   switch (action.type) {
     case updateListActionType:
       return {
@@ -19,6 +19,8 @@ const reducer = (state, action) => {
         productList: [...payload]
       };
     case addProductActionType:
+      const productImage = payload.image || "";
+      payload = { ...payload, image: [productImage] };
       return { ...state, productList: [...state.productList, payload] };
     case displayMessageActionType:
       return {

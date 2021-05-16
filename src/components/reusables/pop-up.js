@@ -28,7 +28,7 @@ function MyVerticallyCenteredModal(props) {
   }
   function sendToParentComponent(e) {
     e.preventDefault();
-    props.handleAddProduct && props.handleAddProduct(formData);
+    props.action && props.action(formData);
     props.onHide();
   }
   return (

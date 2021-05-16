@@ -105,8 +105,8 @@ export default class MyForm extends React.Component {
             {this.state.isLoginOpen && <LoginBox />}
             {this.state.isRegisterOpen && <RegisterBox />}
           </div>
+          <GlobalMessageHandler />
         </div>
-        <GlobalMessageHandler />
       </>
     );
   }

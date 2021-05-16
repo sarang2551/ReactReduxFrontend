@@ -4,7 +4,7 @@ import "./reusables/login.scss";
 import { verifyUser } from "./Api";
 import { connect } from "react-redux";
 import { displayMessage } from "../reduxOld/actions";
-import { sessionService } from "redux-react-session";
+
 class LoginBox extends React.Component {
   constructor(props) {
     super(props);
@@ -28,17 +28,17 @@ class LoginBox extends React.Component {
       username: this.state.username,
       password: this.state.password
     };
-    console.log(userInfo);
     verifyUser(userInfo).then((res) => {
       let loginProps = null;
       const { username, loginStatus } = res.data;
       console.log("res.data ", res.data);
       switch (loginStatus) {
         case "success":
-          sessionService.saveSession({ username, auth: true }).then(() => {
-            this.setState({ redirect: "/", resData: res.data });
-          });
-
+          window.localStorage.setItem(
+            "session",
+            JSON.stringify({ username, auth: true })
+          );
+          this.setState({ redirect: "/", resData: res.data });
           break;
         case "failed":
           loginProps = {
