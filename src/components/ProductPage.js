@@ -3,6 +3,7 @@ import ProductCard from "./reusables/ProductCard";
 import CardDeck from "react-bootstrap/CardDeck";
 import { apiAddProduct, getProducts, apiEditProductInfo } from "./Api";
 import { connect } from "react-redux";
+import GlobalMessageHandler from "./reusables/globalMessageHandler";
 import {
   updateProductList,
   addProduct,
@@ -77,11 +78,12 @@ class ProductPage extends React.Component {
         delete formData[key];
       }
     }
-    const apiFormData = {
+    formData = {
       ...formData,
+      index: this.state.selectedProductIndex,
       username: this.state.sessionData.username
     };
-    const response = await apiEditProductInfo(apiFormData);
+    const response = await apiEditProductInfo(formData);
     if (!response) {
       this.props.displayMessage({
         message: "Server side error while editting product!",
@@ -90,7 +92,14 @@ class ProductPage extends React.Component {
       });
       return;
     }
-    formData = { ...formData, index: this.state.selectedProductIndex };
+    if (response.data.error) {
+      this.props.displayMessage({
+        message: `${response.data.error}`,
+        type: "error",
+        show: true
+      });
+      return;
+    }
 
     // redux action
     this.props.editProduct(formData);
@@ -156,6 +165,7 @@ class ProductPage extends React.Component {
               onHide={this.toggleEditPopUp}
             />
           ) : null}
+          <GlobalMessageHandler />
         </div>
       </>
     );
